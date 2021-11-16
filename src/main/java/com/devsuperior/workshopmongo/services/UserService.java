@@ -30,5 +30,10 @@ public class UserService {
 				return user.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
+	public UserDTO insert(UserDTO user) {
+		repository.insert(user.toEntity());
+		return user;
+	}
+	
 
 }

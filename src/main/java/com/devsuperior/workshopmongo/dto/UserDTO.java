@@ -50,7 +50,9 @@ public class UserDTO implements Serializable {
 	}
 	
 	
-	
+	public User toEntity() {
+		return new User(null, this.name, this.email);
+	}
 
 	@Override
 	public String toString() {
