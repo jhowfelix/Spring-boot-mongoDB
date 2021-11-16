@@ -5,8 +5,7 @@ import java.io.Serializable;
 import com.devsuperior.workshopmongo.domain.User;
 
 public class UserDTO implements Serializable {
-	
-	
+
 	/**
 	 * 
 	 */
@@ -17,6 +16,13 @@ public class UserDTO implements Serializable {
 
 	public UserDTO() {
 		super();
+	}
+
+	public UserDTO(String id, String name, String email) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
 	}
 
 	public UserDTO(User user) {
@@ -48,8 +54,7 @@ public class UserDTO implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
+
 	public User toEntity() {
 		return new User(null, this.name, this.email);
 	}
