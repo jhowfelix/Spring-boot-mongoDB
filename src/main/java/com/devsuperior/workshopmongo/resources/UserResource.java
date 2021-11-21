@@ -18,52 +18,19 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.devsuperior.workshopmongo.domain.Post;
 import com.devsuperior.workshopmongo.domain.User;
 import com.devsuperior.workshopmongo.dto.UserDTO;
-import com.devsuperior.workshopmongo.services.UserService;
+import com.devsuperior.workshopmongo.services.PostService;
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/posts")
 public class UserResource {
 
 	@Autowired
-	private UserService service;
-
-	@GetMapping
-	public ResponseEntity<List<UserDTO>> findAll() {
-		return ResponseEntity.ok().body(service.findAll());
-
-	}
+	private PostService service;
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<UserDTO> findById(@PathVariable("id") String Id) {
-			User user = service.findById(Id);
-			UserDTO userDto = new UserDTO(user);
-		return ResponseEntity.ok().body(userDto);
-	}
-	@GetMapping(value = "/{id}/posts")
-	public ResponseEntity<List<Post>> findPosts(@PathVariable("id") String Id) {
-		User user = service.findById(Id);
-		return ResponseEntity.ok().body(user.getPost());
+	public ResponseEntity<Post> findById(@PathVariable("id") String Id) {
+		Post post = service.findById(Id);
+		return ResponseEntity.ok().body(post);
 	}
 
-	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody UserDTO user) {
-		service.insert(user);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
-		return ResponseEntity.created(uri).build();
-	}
-	
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable("id") String id){
-		service.delete(id);
-		return ResponseEntity.noContent().build();
-		
-	}
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@PathVariable("id") String id, @RequestBody UserDTO userDto){
-		User user = service.fromDTO(userDto);
-		user.setId(id);
-		service.update(user);
-		return ResponseEntity.noContent().build();
-	}
 }
-
